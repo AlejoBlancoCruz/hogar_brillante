@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:hogar_brillante/model/servicio_model.dart'; // Importa el modelo
-import 'package:hogar_brillante/pages/services_form_page.dart'; // Importa el formulario
+import 'package:hogar_brillante/model/servicio_model.dart';
+import 'package:hogar_brillante/pages/services_form_page.dart';
 
-// ¡IMPORTANTE! Reemplaza esto con tu URL base de Xano
-const String xanoBaseUrl = 'https://xw00-0000.xano.io/api:abc/servicio';
+const String xanoBaseUrl =
+    'https://x8ki-letl-twmt.n7.xano.io/api:_ngFc-kT/servicios_limpieza';
 
 class ServicioCrudPage extends StatefulWidget {
   const ServicioCrudPage({super.key});
@@ -46,12 +46,13 @@ class _ServicioCrudPageState extends State<ServicioCrudPage> {
 
     if (servicio.id == null) {
       // CREATE: Petición POST
-      url = xanoBaseUrl;
+      url = 'https://x8ki-letl-twmt.n7.xano.io/api:_ngFc-kT/servicios_limpieza';
       await http.post(Uri.parse(url), headers: headers, body: body);
     } else {
       // UPDATE: Petición POST/PATCH al ID específico
       url = '$xanoBaseUrl/${servicio.id}';
-      await http.post(Uri.parse(url), headers: headers, body: body);
+      //await http.post(Uri.parse(url), headers: headers, body: body); Xano no utiliza PUT
+      await http.patch(Uri.parse(url), headers: headers, body: body);
     }
 
     // Recarga la lista para ver los cambios
@@ -105,6 +106,24 @@ class _ServicioCrudPageState extends State<ServicioCrudPage> {
             itemBuilder: (context, index) {
               final servicio = servicios[index];
               return ListTile(
+                leading: SizedBox(
+                  width: 50, // Define el ancho de la imagen
+                  height: 50, // Define la altura de la imagen
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        8.0), // Opcional: bordes redondeados
+                    child: Image.network(
+                      servicio.imagen,
+                      fit: BoxFit
+                          .cover, // Asegura que la imagen cubra el espacio
+                      errorBuilder: (context, error, stackTrace) {
+                        // Muestra un ícono si la URL de la imagen falla
+                        return const Icon(Icons.broken_image,
+                            color: Colors.grey);
+                      },
+                    ),
+                  ),
+                ),
                 title: Text(servicio.titulo),
                 subtitle: Text(servicio.descripcion),
                 trailing: Row(
