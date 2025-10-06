@@ -2,14 +2,14 @@ class Servicio {
   final String imagen;
   final String titulo;
   final String descripcion;
-  bool seleccionado;
+  //bool seleccionado;
   final int? id;
 
   Servicio({
     required this.imagen,
     required this.titulo,
     required this.descripcion,
-    this.seleccionado = false,
+    //this.seleccionado = false,
     required this.id,
   });
 
@@ -18,7 +18,7 @@ class Servicio {
       imagen: json['imagen'] ?? 'assets/image/default.png',
       titulo: json['titulo'] ?? 'Sin título',
       descripcion: json['descripcion'] ?? 'Sin Descripción',
-      seleccionado: json['seleccionado'] ?? false,
+      //seleccionado: json['seleccionado'] ?? false,
       id: json['id'],
     );
   }
@@ -28,7 +28,6 @@ class Servicio {
       'imagen': imagen,
       'titulo': titulo,
       'descripcion': descripcion,
-      'seleccionado': seleccionado,
     };
     if (id != null) {
       data['id'] = id;

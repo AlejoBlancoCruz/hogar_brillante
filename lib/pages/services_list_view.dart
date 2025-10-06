@@ -14,6 +14,7 @@ class _ServiciosListViewState extends State<ServiciosListView> {
   final ServicioService _servicioService = ServicioService();
   List<Servicio> servicios = [];
   bool isLoading = true;
+  final Set<int> _serviciosSeleccionados = {};
 
   @override
   void initState() {
@@ -45,8 +46,8 @@ class _ServiciosListViewState extends State<ServiciosListView> {
   }
 
   void _onPressed() {
-    bool algunoSeleccionado = servicios.any((s) => s.seleccionado);
-    if (algunoSeleccionado) {
+    //bool algunoSeleccionado = servicios.any((s) => s.seleccionado);
+    if (_serviciosSeleccionados.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Botón pulsado: hay servicios seleccionados'),
@@ -80,6 +81,7 @@ class _ServiciosListViewState extends State<ServiciosListView> {
                     itemCount: servicios.length,
                     itemBuilder: (context, index) {
                       final servicio = servicios[index];
+                      if (servicio.id == null) return const SizedBox.shrink();
                       return Card(
                         margin: const EdgeInsets.symmetric(
                           vertical: 8,
@@ -145,10 +147,18 @@ class _ServiciosListViewState extends State<ServiciosListView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Checkbox(
-                                    value: servicio.seleccionado,
+                                    value: _serviciosSeleccionados
+                                        .contains(servicio.id),
                                     onChanged: (bool? value) {
                                       setState(() {
-                                        servicio.seleccionado = value ?? false;
+                                        if (value == true) {
+                                          _serviciosSeleccionados
+                                              .add(servicio.id!);
+                                        } else {
+                                          _serviciosSeleccionados
+                                              .remove(servicio.id!);
+                                        }
+                                        //servicio.seleccionado = value ?? false;
                                       });
                                     },
                                   ),

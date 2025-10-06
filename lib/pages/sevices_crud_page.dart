@@ -87,7 +87,7 @@ class _ServicioCrudPageState extends State<ServicioCrudPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('CRUD Servicios Xano')),
+      appBar: AppBar(title: const Text('Mantenimiento de Servicios')),
       body: FutureBuilder<List<Servicio>>(
         future: _serviciosFuture,
         builder: (context, snapshot) {
@@ -105,43 +105,52 @@ class _ServicioCrudPageState extends State<ServicioCrudPage> {
             itemCount: servicios.length,
             itemBuilder: (context, index) {
               final servicio = servicios[index];
-              return ListTile(
-                leading: SizedBox(
-                  width: 50, // Define el ancho de la imagen
-                  height: 50, // Define la altura de la imagen
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                        8.0), // Opcional: bordes redondeados
-                    child: Image.network(
-                      servicio.imagen,
-                      fit: BoxFit
-                          .cover, // Asegura que la imagen cubra el espacio
-                      errorBuilder: (context, error, stackTrace) {
-                        // Muestra un ícono si la URL de la imagen falla
-                        return const Icon(Icons.broken_image,
-                            color: Colors.grey);
-                      },
+              return Container(
+                margin: const EdgeInsets.symmetric(
+                    vertical: 8.0, horizontal: 16.0), // Espaciado externo
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1.0), // Borde
+                  borderRadius:
+                      BorderRadius.circular(8.0), // Bordes redondeados
+                ),
+                child: ListTile(
+                  leading: SizedBox(
+                    width: 50, // Define el ancho de la imagen
+                    height: 50, // Define la altura de la imagen
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Opcional: bordes redondeados
+                      child: Image.network(
+                        servicio.imagen,
+                        fit: BoxFit
+                            .cover, // Asegura que la imagen cubra el espacio
+                        errorBuilder: (context, error, stackTrace) {
+                          // Muestra un ícono si la URL de la imagen falla
+                          return const Icon(Icons.broken_image,
+                              color: Colors.grey);
+                        },
+                      ),
                     ),
                   ),
+                  title: Text(servicio.titulo),
+                  subtitle: Text(servicio.descripcion),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // EDITAR (UPDATE)
+                      IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.blue),
+                        onPressed: () => _openServicioForm(servicio: servicio),
+                      ),
+                      // BORRAR (DELETE)
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () => _deleteServicio(servicio.id!),
+                      ),
+                    ],
+                  ),
+                  onTap: () => _openServicioForm(servicio: servicio),
                 ),
-                title: Text(servicio.titulo),
-                subtitle: Text(servicio.descripcion),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // EDITAR (UPDATE)
-                    IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.blue),
-                      onPressed: () => _openServicioForm(servicio: servicio),
-                    ),
-                    // BORRAR (DELETE)
-                    IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () => _deleteServicio(servicio.id!),
-                    ),
-                  ],
-                ),
-                onTap: () => _openServicioForm(servicio: servicio),
               );
             },
           );

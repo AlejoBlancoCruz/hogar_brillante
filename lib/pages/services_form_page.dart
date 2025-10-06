@@ -22,7 +22,7 @@ class _ServicioFormPageState extends State<ServicioFormPage> {
   final _tituloController = TextEditingController();
   final _descripcionController = TextEditingController();
   final _imagenController = TextEditingController();
-  bool _seleccionado = false;
+  // bool _seleccionado = false;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ServicioFormPageState extends State<ServicioFormPage> {
       _tituloController.text = widget.servicio!.titulo;
       _descripcionController.text = widget.servicio!.descripcion;
       _imagenController.text = widget.servicio!.imagen;
-      _seleccionado = widget.servicio!.seleccionado;
+      // _seleccionado = widget.servicio!.seleccionado;
     }
   }
 
@@ -52,7 +52,7 @@ class _ServicioFormPageState extends State<ServicioFormPage> {
         titulo: _tituloController.text,
         descripcion: _descripcionController.text,
         imagen: _imagenController.text,
-        seleccionado: _seleccionado,
+        //seleccionado: _seleccionado,
       );
 
       // Ejecutamos la función onSave (el callback a la página principal)
@@ -98,7 +98,7 @@ class _ServicioFormPageState extends State<ServicioFormPage> {
                 controller: _imagenController,
                 decoration: const InputDecoration(labelText: 'URL de Imagen'),
               ),
-              const SizedBox(height: 15),
+              /* const SizedBox(height: 15),
               Row(
                 children: [
                   const Text('Seleccionado:'),
@@ -111,7 +111,7 @@ class _ServicioFormPageState extends State<ServicioFormPage> {
                     },
                   ),
                 ],
-              ),
+              ), */
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _submitForm,
